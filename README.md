@@ -4,8 +4,8 @@ This file uses Mark Down syntax. For more information see [here](https://www.mar
 
 [//]: # (TODO: Fill inn your name and student ID)
 
-STUDENT NAME = "Your name"  
-STUDENT ID = "Your ID"
+STUDENT NAME = "Julie Bao Thi Tran"  
+STUDENT ID = "562673"
 
 ## Project description
 
