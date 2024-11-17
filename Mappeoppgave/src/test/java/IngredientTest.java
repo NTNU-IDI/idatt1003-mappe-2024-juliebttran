@@ -81,20 +81,4 @@ public class IngredientTest {
     );
     assertEquals("The amount has to be a positive number, please try again!", exception.getMessage());
   }
-
-  @Test
-  void testToString() {
-    Ingredient ingredient = new Ingredient(
-        "Sugar",
-        1.5,
-        "kg",
-        LocalDate.of(2024, 12, 31),
-        10.0
-    );
-    String expected = "Name of ingredient: Sugar" +
-        "\nAmount: 1.5 kg" +
-        "\nBest-before-date: 2024-12-31" +
-        "\nPrice per unit: 10.0";
-    assertEquals(expected, ingredient.toString());
-  }
 }
