@@ -1,4 +1,5 @@
-import edu.ntnu.idi.idatt.Ingredient;
+package edu.ntnu.idi.idatt.models;
+
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,7 +28,7 @@ public class IngredientTest {
         IllegalArgumentException.class,
         () -> new Ingredient("", 1.5, "kg", LocalDate.of(2024, 12, 31), 10.0)
     );
-    assertEquals("The name has to exist, please try again!", exception.getMessage());
+    assertEquals("Name cannot be blank, please try again!", exception.getMessage());
   }
 
   @Test
@@ -36,7 +37,7 @@ public class IngredientTest {
         IllegalArgumentException.class,
         () -> new Ingredient("Sugar", -1.0, "kg", LocalDate.of(2024, 12, 31), 10.0)
     );
-    assertEquals("The amount has to be a positive number, please try again!", exception.getMessage());
+    assertEquals("Amount must be positive, please try again!", exception.getMessage());
   }
 
   @Test
@@ -45,7 +46,7 @@ public class IngredientTest {
         IllegalArgumentException.class,
         () -> new Ingredient("Sugar", 1.5, "", LocalDate.of(2024, 12, 31), 10.0)
     );
-    assertEquals("The unit has to exist, please try again!", exception.getMessage());
+    assertEquals("Unit must be 'Kg' or 'L', please try again!", exception.getMessage());
   }
 
   @Test
@@ -54,7 +55,7 @@ public class IngredientTest {
         IllegalArgumentException.class,
         () -> new Ingredient("Sugar", 1.5, "kg", null, 10.0)
     );
-    assertEquals("The best-before-date has to exist, please try again!", exception.getMessage());
+    assertEquals("Best-before-date cannot be null, please try again!", exception.getMessage());
   }
 
   @Test
@@ -63,7 +64,7 @@ public class IngredientTest {
         IllegalArgumentException.class,
         () -> new Ingredient("Sugar", 1.5, "kg", LocalDate.of(2024, 12, 31), -10.0)
     );
-    assertEquals("The price has to exist, please try again!", exception.getMessage());
+    assertEquals("Price must be positive, please try again!", exception.getMessage());
   }
 
   @Test
@@ -79,6 +80,6 @@ public class IngredientTest {
         IllegalArgumentException.class,
         () -> ingredient.setAmount(-2.0)
     );
-    assertEquals("The amount has to be a positive number, please try again!", exception.getMessage());
+    assertEquals("Amount must be positive, please try again!", exception.getMessage());
   }
 }

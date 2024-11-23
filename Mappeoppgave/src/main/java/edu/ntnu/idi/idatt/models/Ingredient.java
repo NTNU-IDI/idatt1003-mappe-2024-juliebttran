@@ -1,4 +1,4 @@
-package edu.ntnu.idi.idatt;
+package edu.ntnu.idi.idatt.models;
 
 import java.time.LocalDate;
 
@@ -6,7 +6,7 @@ import java.time.LocalDate;
  * Class representing an ingredient.
  *
  * @author Julie Bao Thi Tran
- * @version 14.11.2024
+ * @since 0.0
  */
 public class Ingredient {
   // Final because name will never change, String because name is a text
@@ -27,32 +27,31 @@ public class Ingredient {
    * Constructor for Ingredient-class.
    *
    * @param name       Name of the ingredient, String, cannot be blank
-   * @param amount     Amount of the ingredient, double, cannot be negative
-   *                   (think SI-unit)
+   * @param amount     Amount of the ingredient, double, must be positive, in kilogram or litre
    * @param unit       Unit to describe the amount of the ingredient, String,
-   *                   cannot be blank (think SI-unit)
+   *                   cannot be blank, Kg or L
    * @param bestBefore Best-before-date for the ingredient, LocalDate,
    *                   should only contain year, month and day
-   * @param price      Price of the ingredient per unit, double, cannot be negative
-   * @throws IllegalArgumentException Throws illegal argument exception and asks client to try again
+   * @param price      Price per unit of the ingredient, double, must be positive, in NOK
+   * @throws IllegalArgumentException If any parameter is invalid
    */
   public Ingredient(String name, double amount, String unit, LocalDate bestBefore, double price)
       throws IllegalArgumentException {
     if (name.isBlank()) {
-      throw new IllegalArgumentException("The name has to exist, please try again!");
+      throw new IllegalArgumentException("Name cannot be blank, please try again!");
     }
     if (amount < 0) {
       throw new IllegalArgumentException(
-          "The amount has to be a positive number, please try again!");
+          "Amount must be positive, please try again!");
     }
     if (unit.isBlank()) {
-      throw new IllegalArgumentException("The unit has to exist, please try again!");
+      throw new IllegalArgumentException("Unit must be 'Kg' or 'L', please try again!");
     }
     if (bestBefore == null) {
-      throw new IllegalArgumentException("The best-before-date has to exist, please try again!");
+      throw new IllegalArgumentException("Best-before-date cannot be null, please try again!");
     }
     if (price < 0) {
-      throw new IllegalArgumentException("The price has to exist, please try again!");
+      throw new IllegalArgumentException("Price must be positive, please try again!");
     }
 
     this.name = name;
@@ -65,7 +64,7 @@ public class Ingredient {
   /**
    * get-method for name.
    *
-   * @return The name of the ingredient
+   * @return The name of the ingredient, String
    */
   public String getName() {
     return name;
@@ -74,7 +73,7 @@ public class Ingredient {
   /**
    * get-method for amount.
    *
-   * @return The amount of the ingredient
+   * @return The amount of the ingredient, double
    */
   public double getAmount() {
     return amount;
@@ -89,7 +88,7 @@ public class Ingredient {
   public void setAmount(double amount) {
     if (amount < 0) {
       throw new IllegalArgumentException(
-          "The amount has to be a positive number, please try again!");
+          "Amount must be positive, please try again!");
     }
     this.amount = amount;
   }
@@ -97,7 +96,7 @@ public class Ingredient {
   /**
    * get-method for unit.
    *
-   * @return The unit of the ingredient
+   * @return The unit of the ingredient, String
    */
   public String getUnit() {
     return unit;
@@ -106,7 +105,7 @@ public class Ingredient {
   /**
    * get-method for bestBefore.
    *
-   * @return The best-before-date of the ingredient
+   * @return The best-before-date of the ingredient, LocalDate
    */
   public LocalDate getBestBefore() {
     return bestBefore;
@@ -115,7 +114,7 @@ public class Ingredient {
   /**
    * get-method for price.
    *
-   * @return The price of the ingredient
+   * @return The price of the ingredient, double
    */
   public double getPrice() {
     return price;
@@ -130,7 +129,7 @@ public class Ingredient {
     return "Name of ingredient: " + getName()
         + "\nAmount: " + getAmount() + " " + getUnit()
         + "\nBest-before-date: " + getBestBefore()
-        + "\nPrice per unit: " + getPrice();
+        + "\nPrice per unit: " + getPrice() + " NOK";
   }
 }
 
