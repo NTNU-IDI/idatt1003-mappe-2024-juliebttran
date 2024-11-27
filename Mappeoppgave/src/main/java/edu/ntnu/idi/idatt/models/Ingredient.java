@@ -6,7 +6,8 @@ import java.time.LocalDate;
  * Class representing an ingredient.
  *
  * @author Julie Bao Thi Tran
- * @since 0.0
+ * @version 23.11
+ * @since 17.11
  */
 public class Ingredient {
   // Final because name will never change, String because name is a text
@@ -37,18 +38,21 @@ public class Ingredient {
    */
   public Ingredient(String name, double amount, String unit, LocalDate bestBefore, double price)
       throws IllegalArgumentException {
-    if (name.isBlank()) {
+    if (name.isBlank() || name.isEmpty()) {
       throw new IllegalArgumentException("Name cannot be blank, please try again!");
     }
     if (amount < 0) {
       throw new IllegalArgumentException(
           "Amount must be positive, please try again!");
     }
-    if (unit.isBlank()) {
+    if (!unit.equalsIgnoreCase("L") && !unit.equalsIgnoreCase("Kg")) {
       throw new IllegalArgumentException("Unit must be 'Kg' or 'L', please try again!");
     }
     if (bestBefore == null) {
       throw new IllegalArgumentException("Best-before-date cannot be null, please try again!");
+    }
+    if (bestBefore.isBefore(LocalDate.now())) {
+      throw new IllegalArgumentException("Best-before-date must be after today, please try again!");
     }
     if (price < 0) {
       throw new IllegalArgumentException("Price must be positive, please try again!");
@@ -129,7 +133,8 @@ public class Ingredient {
     return "Name of ingredient: " + getName()
         + "\nAmount: " + getAmount() + " " + getUnit()
         + "\nBest-before-date: " + getBestBefore()
-        + "\nPrice per unit: " + getPrice() + " NOK";
+        + "\nPrice per unit: " + getPrice() + " NOK"
+        + "\n";
   }
 }
 
