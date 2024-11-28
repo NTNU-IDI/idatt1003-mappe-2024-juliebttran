@@ -38,7 +38,7 @@ public class Ingredient {
    */
   public Ingredient(String name, double amount, String unit, LocalDate bestBefore, double price)
       throws IllegalArgumentException {
-    if (name.isBlank() || name.isEmpty()) {
+    if (name.isBlank()) {
       throw new IllegalArgumentException("Name cannot be blank, please try again!");
     }
     if (amount < 0) {
