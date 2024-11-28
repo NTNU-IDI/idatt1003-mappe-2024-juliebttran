@@ -22,7 +22,7 @@ public class IngredientForRecipe {
    * @param amountOfIngredientForRecipe Amount of the ingredient, double, must be positive, in
    *                                    kilogram or litre
    * @param unitOfIngredientForRecipe   Unit to describe the amount of the ingredient, String,
-   *                                    *                   cannot be blank, Kg or L
+   *                                    cannot be blank, Kg or L
    * @throws IllegalArgumentException If any parameter is invalid
    */
   public IngredientForRecipe(String nameOfIngredientForRecipe, double amountOfIngredientForRecipe,

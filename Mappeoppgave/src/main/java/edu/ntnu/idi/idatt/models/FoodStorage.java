@@ -12,6 +12,7 @@ import java.util.Comparator;
  * @since 24.11
  */
 public class FoodStorage {
+  // Final to prevent external code from modifying the original list directly, ArrayList
   private final ArrayList<Ingredient> ingredients;
 
   /**
@@ -24,7 +25,7 @@ public class FoodStorage {
   }
 
   /**
-   * get-method for Ingredients.
+   * get-method for ingredients.
    *
    * @return List of ingredients in the food storage, ArrayList
    */
@@ -35,9 +36,9 @@ public class FoodStorage {
   /**
    * Method for adding a new ingredient to the food storage.
    *
-   * @param newIngredient The ingredient to add to the food storage
-   * @return If the amount of an ingredient is updated the method will return 'true', else if a new
-   *      ingredient is added to the list the method will return 'false'
+   * @param newIngredient The ingredient to add to the food storage, Ingredient
+   * @return 'true' if the ingredient already exists in food storage and only amount is added,
+   *      'false' if a new ingredient is added to the food storage
    */
   public boolean addNewIngredient(Ingredient newIngredient) {
     for (Ingredient ingredient : ingredients) {
@@ -51,16 +52,16 @@ public class FoodStorage {
   }
 
   /**
-   * Method for finding an ingredient in the foodstorage.
-   * Searched through the food storage based by the name of the ingredient
+   * Method for finding an ingredient in the food storage.
+   * Searches through the food storage based by the name of the ingredient
    *
-   * @param ingredientName Name of the ingredient you want to find
-   * @return If found, the method will return the ingredient, else the method return 'null',
-   *      Ingredient
+   * @param nameOfIngredient The name of the ingredient you want to find, String
+   * @return ingredient of type Ingredient, if it exists in the food storage, 'null' if it does not
+   *      exist
    */
-  public Ingredient findIngredient(String ingredientName) {
+  public Ingredient findIngredient(String nameOfIngredient) {
     for (Ingredient ingredient : ingredients) {
-      if (ingredient.getName().equalsIgnoreCase(ingredientName)) {
+      if (ingredient.getName().equalsIgnoreCase(nameOfIngredient)) {
         return ingredient;
       }
     }
@@ -69,22 +70,23 @@ public class FoodStorage {
 
   /**
    * Method for removing an amount of an existing ingredient.
-   * If the client tries to remove more than the amount in the foodstorage,ƒ
+   * Uses findIngredient-method to find the specific ingredient in the food storage
    *
-   * @param ingredientName Name of the ingredient you want to find
-   * @param amountToRemove The amount you want to remove of an ingredient in the food storage
-   * @return If either amount or the ingredient is removed the method will return 'true', else
-   *      'false', boolean
+   * @param nameOfIngredient The name of the ingredient you want to remove an amount from, String
+   * @param amountToRemove The amount you want to remove of an ingredient in the food storage,
+   *                       double
+   * @return 'false' if the amount in food storage is less than the amount you want to remove,
+   *      'true' if amount of ingredient or the ingredient itself is removed
    */
-  public boolean removeAmountOfIngredient(String ingredientName, double amountToRemove) {
-    Ingredient ingredient = findIngredient(ingredientName);
-    if (ingredient.getAmount() < amountToRemove) {
+  public boolean removeAmountOfIngredient(String nameOfIngredient, double amountToRemove) {
+    Ingredient foundIngredient = findIngredient(nameOfIngredient);
+    if (foundIngredient.getAmount() < amountToRemove) {
       return false;
-    } else if (ingredient.getAmount() == amountToRemove) {
-      ingredients.remove(ingredient);
+    } else if (foundIngredient.getAmount() == amountToRemove) {
+      ingredients.remove(foundIngredient);
       return true;
     } else {
-      ingredient.setAmount(ingredient.getAmount() - amountToRemove);
+      foundIngredient.setAmount(foundIngredient.getAmount() - amountToRemove);
       return true;
     }
   }
@@ -93,7 +95,7 @@ public class FoodStorage {
    * Method for finding all ingredients in the food storage with best-before-date before a specific
    * date.
    *
-   * @param date The date you want to use as reference
+   * @param date The date you want to use as reference, LocalDate
    * @return List of all the ingredients in the food storage with best-before-date before the
    *      specific date, ArrayList
    */
