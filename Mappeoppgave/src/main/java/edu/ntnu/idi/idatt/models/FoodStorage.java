@@ -114,8 +114,7 @@ public class FoodStorage {
    */
   public ArrayList<Ingredient> sortAllIngredientsAlphabetical() {
     ingredients.sort(Comparator.comparing(Ingredient::getName));
-    ArrayList<Ingredient> sortedList = new ArrayList<>(ingredients);
-    return sortedList;
+    return new ArrayList<>(ingredients);
   }
 
   /**
