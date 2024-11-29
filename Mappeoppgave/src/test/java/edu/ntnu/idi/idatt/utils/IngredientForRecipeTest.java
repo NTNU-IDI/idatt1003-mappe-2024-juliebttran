@@ -3,8 +3,6 @@ package edu.ntnu.idi.idatt.utils;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import edu.ntnu.idi.idatt.models.Ingredient;
-import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
 public class IngredientForRecipeTest {
