@@ -108,6 +108,27 @@ public class FoodStorage {
   }
 
   /**
+   * Method for finding all the expired ingredients in the food storage.
+   *
+   * @return List of all the expired ingredients in the food storage, Arraylist
+   */
+  public ArrayList<Ingredient> findAllExpiredIngredients() {
+    LocalDate todaysDate = LocalDate.now();
+    return findAllIngredientsBeforeDate(todaysDate);
+  }
+
+  /**
+   * Method for summing the total sum of all the expired ingredients in the food storage.
+   *
+   * @return Total sum of all the expired ingredients in the food storage, double
+   */
+  public double sumOfExpiredIngredients() {
+    return findAllExpiredIngredients().stream()
+        .mapToDouble(ingredient -> ingredient.getAmount() * ingredient.getPrice())
+        .sum();
+  }
+
+  /**
    * Method for sorting all the ingredients in the food storage, in alphabetical order.
    *
    * @return List of all the ingredients in the food storage, in alphabetical order, ArrayList

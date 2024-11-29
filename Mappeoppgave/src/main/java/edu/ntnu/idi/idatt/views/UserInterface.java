@@ -55,8 +55,8 @@ public class UserInterface {
       System.out.println("1: If you want a list of all the ingredients in the food storage.");
       System.out.println("2: If you want to add a new ingredient to the food storage.");
       System.out.println("3: If you want to remove an amount from the food storage.");
-      System.out.println("4: If you want a list of all the ingredients with best-before-date"
-          + " before a specific date.");
+      System.out.println("4: If you want a list of all the expired ingredients in the food"
+          + " storage.");
       System.out.println("5: If you want a list for all the ingredients in the food storage,"
           + " in alphabetical order.");
       System.out.println("6: If you want a list of all the recipes in the cookbook.");
@@ -80,7 +80,7 @@ public class UserInterface {
           removeAmountFromFoodStorage();
           break;
         case 4:
-          printListOfIngredientsBeforeDate();
+          printListOfExpiredIngredients();
           break;
         case 5:
           printListOfIngredientsAlphabetical();
@@ -118,14 +118,14 @@ public class UserInterface {
    * Method for filling the food storage with ingredients.
    */
   public void fillFoodStorage() {
-    Ingredient carrot = new Ingredient("Carrot", 2.3, "Kg", LocalDate.of(2025, 8, 12), 24.5);
+    Ingredient carrot = new Ingredient("Carrot", 2.3, "Kg", LocalDate.of(2024, 11, 12), 24.5);
     Ingredient sugar = new Ingredient("Sugar", 1.5, "Kg", LocalDate.of(2025, 12, 14), 29.9);
     Ingredient flour = new Ingredient("Flour", 2.0, "Kg", LocalDate.of(2025, 3, 5), 19.90);
     Ingredient broccolini =
         new Ingredient("Broccolini", 0.5, "Kg", LocalDate.of(2025, 7, 30), 39.90);
     Ingredient egg = new Ingredient("Egg", 1, "Kg", LocalDate.of(2025, 1, 17), 62.99);
     Ingredient butter = new Ingredient("Butter", 0.5, "Kg", LocalDate.of(2025, 3, 30), 64.90);
-    Ingredient milk = new Ingredient("Milk", 1.5, "L", LocalDate.of(2025, 9, 28), 24.5);
+    Ingredient milk = new Ingredient("Milk", 1.5, "L", LocalDate.of(2024, 9, 28), 24.5);
     Ingredient juice = new Ingredient("Juice", 1, "L", LocalDate.of(2025, 11, 16), 46.90);
     Ingredient bread = new Ingredient("Bread", 0.5, "Kg", LocalDate.of(2025, 4, 7), 50.90);
     Ingredient salami = new Ingredient("Salami", 0.3, "Kg", LocalDate.of(2025, 10, 15), 330.00);
@@ -222,14 +222,14 @@ public class UserInterface {
       } else {
         System.out.println("Ingredient was successfully added to the food storage.");
       }
-    } catch (IllegalArgumentException e) {
-      System.out.println(e.getMessage());
+    } catch (IllegalArgumentException exception) {
+      System.out.println(exception.getMessage());
     }
   }
 
   /**
    * Method for removing an amount of an existing ingredient.
-    */
+   */
   public void removeAmountFromFoodStorage() {
     Ingredient foundIngredient;
     String nameOfremovedIngredient;
@@ -262,37 +262,17 @@ public class UserInterface {
   }
 
   /**
-   * Method for printing all the ingredients in the food storage with best-before-date before a
-   * specific date.
+   * Method for printing all the expired ingredients in the food storage, including the total sum
+   * of the ingredients.
    * Prints each ingredient in the following format: name, amount with unit, best-before-date
    * and price per unit
    */
-  public void printListOfIngredientsBeforeDate() {
-    System.out.println(
-        "Which date to you want to use as reference, in the following format: yyyy-mm-dd");
-    LocalDate checkDate = null;
-    boolean validDate = false;
-    do {
-      String dateForReference = scanner.nextLine();
-      try {
-        String[] dateParts = dateForReference.split("-");
-        checkDate = LocalDate.of(Integer.parseInt(dateParts[0]), Integer.parseInt(dateParts[1]),
-            Integer.parseInt(dateParts[2]));
-        validDate = true;
-      } catch (Exception e) {
-        System.out.println(
-            "The date-format you provided is wrong, please try again in the following format:"
-                + " yyyy-mm-dd");
-      }
-    } while (!validDate);
-    ArrayList<Ingredient> findAllIngredientsBeforeDate =
-        foodStorage.findAllIngredientsBeforeDate(checkDate);
-    if (!findAllIngredientsBeforeDate.isEmpty()) {
-      findAllIngredientsBeforeDate.stream()
+  public void printListOfExpiredIngredients() {
+    if (!foodStorage.findAllExpiredIngredients().isEmpty()) {
+      foodStorage.findAllExpiredIngredients()
           .forEach(System.out::println);
-    } else {
       System.out.println(
-          "There is no ingredient in the food storage with best-before-date before " + checkDate);
+          "Total sum of expired ingredients: " + foodStorage.sumOfExpiredIngredients());
     }
   }
 
@@ -302,7 +282,7 @@ public class UserInterface {
    * and price per unit
    */
   public void printListOfIngredientsAlphabetical() {
-    foodStorage.sortAllIngredientsAlphabetical().stream()
+    foodStorage.sortAllIngredientsAlphabetical()
         .forEach(System.out::println);
   }
 
@@ -341,8 +321,8 @@ public class UserInterface {
           new Recipe(nameOfRecipe, descriptionOfRecipe, instructionsOfRecipe, ingredientsForRecipe,
               servingsForRecipe);
       cookBook.addNewRecipe(newRecipe);
-    } catch (Exception e) {
-      System.out.println(e.getMessage());
+    } catch (Exception exception) {
+      System.out.println(exception.getMessage());
     }
   }
 
@@ -373,8 +353,8 @@ public class UserInterface {
           new IngredientForRecipe(nameOfIngredient, amountOfIngredient, unitOfIngredient);
       cookBook.addIngredientToRecipe(nameOfRecipe, newIngredient);
       System.out.println(nameOfIngredient + " was successfully added to " + nameOfRecipe + ".");
-    } catch (Exception e) {
-      System.out.println(e.getMessage());
+    } catch (Exception exception) {
+      System.out.println(exception.getMessage());
     }
   }
 
