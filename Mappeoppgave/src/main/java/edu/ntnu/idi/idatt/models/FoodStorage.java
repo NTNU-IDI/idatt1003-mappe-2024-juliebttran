@@ -3,6 +3,7 @@ package edu.ntnu.idi.idatt.models;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.stream.Collectors;
 
 /**
  * Class representing a food storage.
@@ -41,14 +42,17 @@ public class FoodStorage {
    *      'false' if a new ingredient is added to the food storage
    */
   public boolean addNewIngredient(Ingredient newIngredient) {
-    for (Ingredient ingredient : ingredients) {
-      if (ingredient.getName().equalsIgnoreCase(newIngredient.getName())) {
-        ingredient.setAmount(ingredient.getAmount() + newIngredient.getAmount());
-        return true;
-      }
-    }
-    ingredients.add(newIngredient);
-    return false;
+    return ingredients.stream()
+        .filter(ingredient -> ingredient.getName().equalsIgnoreCase(newIngredient.getName()))
+        .findFirst()
+        .map(ingredient -> {
+          ingredient.setAmount(ingredient.getAmount() + newIngredient.getAmount());
+          return true;
+        })
+        .orElseGet(() -> {
+          ingredients.add(newIngredient);
+          return false;
+        });
   }
 
   /**
@@ -60,12 +64,10 @@ public class FoodStorage {
    *      exist
    */
   public Ingredient findIngredient(String nameOfIngredient) {
-    for (Ingredient ingredient : ingredients) {
-      if (ingredient.getName().equalsIgnoreCase(nameOfIngredient)) {
-        return ingredient;
-      }
-    }
-    return null;
+    return ingredients.stream()
+        .filter(ingredient -> ingredient.getName().equalsIgnoreCase(nameOfIngredient))
+        .findFirst()
+        .orElse(null);
   }
 
   /**
@@ -100,13 +102,9 @@ public class FoodStorage {
    *      specific date, ArrayList
    */
   public ArrayList<Ingredient> findAllIngredientsBeforeDate(LocalDate date) {
-    ArrayList<Ingredient> ingredientsBeforeDate = new ArrayList<>();
-    for (Ingredient ingredient : ingredients) {
-      if (ingredient.getBestBefore().isBefore(date)) {
-        ingredientsBeforeDate.add(ingredient);
-      }
-    }
-    return ingredientsBeforeDate;
+    return ingredients.stream()
+        .filter(ingredient -> ingredient.getBestBefore().isBefore(date))
+        .collect(Collectors.toCollection(ArrayList::new));
   }
 
   /**
@@ -115,8 +113,9 @@ public class FoodStorage {
    * @return List of all the ingredients in the food storage, in alphabetical order, ArrayList
    */
   public ArrayList<Ingredient> sortAllIngredientsAlphabetical() {
-    ingredients.sort(Comparator.comparing(Ingredient::getName));
-    return new ArrayList<>(ingredients);
+    return ingredients.stream()
+        .sorted(Comparator.comparing(Ingredient::getName))
+        .collect(Collectors.toCollection(ArrayList::new));
   }
 
   /**
@@ -125,10 +124,8 @@ public class FoodStorage {
    * @return String of information about all the ingredients in the food storage
    */
   public String toString() {
-    StringBuilder printFoodStorage = new StringBuilder();
-    for (Ingredient ingredient : ingredients) {
-      printFoodStorage.append(ingredient.toString()).append("\n");
-    }
-    return printFoodStorage.toString();
+    return ingredients.stream()
+        .map(Ingredient::toString)
+        .collect(Collectors.joining("\n"));
   }
 }

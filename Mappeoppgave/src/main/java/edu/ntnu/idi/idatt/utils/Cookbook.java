@@ -1,6 +1,7 @@
 package edu.ntnu.idi.idatt.utils;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * Class representing a cookbook.
@@ -48,12 +49,10 @@ public class Cookbook {
    *      'null' if it does not exist
    */
   public Recipe findRecipe(String nameOfRecipe) {
-    for (Recipe recipe : recipes) {
-      if (recipe.getNameOfRecipe().equalsIgnoreCase(nameOfRecipe)) {
-        return recipe;
-      }
-    }
-    return null;
+    return recipes.stream()
+        .filter(recipe -> recipe.getNameOfRecipe().equalsIgnoreCase(nameOfRecipe))
+        .findFirst()
+        .orElse(null);
   }
 
   /**
@@ -62,17 +61,10 @@ public class Cookbook {
    * @param nameOfRecipe  The name of the recipe you want to add an ingredient to, String
    * @param newIngredient The ingredient you want to add to this specific recipe, of type
    *                      IngredientForRecipe
-   * @return 'false' if the specific recipe does not exist in the cookbook, 'true' if the recipe
-   *     exists and ingredient is added
    */
-  public boolean addIngredientToRecipe(String nameOfRecipe, IngredientForRecipe newIngredient) {
+  public void addIngredientToRecipe(String nameOfRecipe, IngredientForRecipe newIngredient) {
     Recipe foundRecipe = findRecipe(nameOfRecipe);
-    if (foundRecipe == null) {
-      return false;
-    } else {
-      foundRecipe.addIngredient(newIngredient);
-      return true;
-    }
+    foundRecipe.addIngredient(newIngredient);
   }
 
   /**
@@ -81,10 +73,8 @@ public class Cookbook {
    * @return String of information about all the recipes in the cookbook
    */
   public String toString() {
-    StringBuilder printCookbook = new StringBuilder();
-    for (Recipe recipe : recipes) {
-      printCookbook.append(recipe.toString()).append("\n");
-    }
-    return printCookbook.toString();
+    return recipes.stream()
+        .map(Recipe::toString)
+        .collect(Collectors.joining("\n"));
   }
 }

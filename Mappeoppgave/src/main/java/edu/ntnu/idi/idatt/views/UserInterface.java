@@ -288,9 +288,8 @@ public class UserInterface {
     ArrayList<Ingredient> findAllIngredientsBeforeDate =
         foodStorage.findAllIngredientsBeforeDate(checkDate);
     if (!findAllIngredientsBeforeDate.isEmpty()) {
-      for (Ingredient ingredient : findAllIngredientsBeforeDate) {
-        System.out.println(ingredient);
-      }
+      findAllIngredientsBeforeDate.stream()
+          .forEach(System.out::println);
     } else {
       System.out.println(
           "There is no ingredient in the food storage with best-before-date before " + checkDate);
@@ -303,9 +302,8 @@ public class UserInterface {
    * and price per unit
    */
   public void printListOfIngredientsAlphabetical() {
-    for (Ingredient ingredient : foodStorage.sortAllIngredientsAlphabetical()) {
-      System.out.println(ingredient);
-    }
+    foodStorage.sortAllIngredientsAlphabetical().stream()
+        .forEach(System.out::println);
   }
 
   /**
@@ -374,6 +372,7 @@ public class UserInterface {
       IngredientForRecipe newIngredient =
           new IngredientForRecipe(nameOfIngredient, amountOfIngredient, unitOfIngredient);
       cookBook.addIngredientToRecipe(nameOfRecipe, newIngredient);
+      System.out.println(nameOfIngredient + " was successfully added to " + nameOfRecipe + ".");
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
@@ -433,9 +432,9 @@ public class UserInterface {
    */
   public void listOfSuggestedRecipes() {
     if (!mealManager.suggestRecipes().isEmpty()) {
-      for (Recipe recipe : mealManager.suggestRecipes()) {
-        System.out.println(recipe.toString());
-      }
+      mealManager.suggestRecipes().stream()
+          .map(Recipe::toString)
+          .forEach(System.out::println);
     } else {
       System.out.println("You cannot make any recipes with the available ingredients in the food"
           + " storage.");

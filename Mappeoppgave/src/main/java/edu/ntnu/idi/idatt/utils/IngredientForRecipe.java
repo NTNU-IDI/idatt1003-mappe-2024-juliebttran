@@ -78,6 +78,6 @@ public class IngredientForRecipe {
    */
   public String toString() {
     return getNameOfIngredientForRecipe() + " " + getAmountOfIngredientForRecipe() + " "
-        + getUnitOfIngredientForRecipe() + "\n";
+        + getUnitOfIngredientForRecipe();
   }
 }

@@ -1,6 +1,7 @@
 package edu.ntnu.idi.idatt.utils;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * Class representing a recipe.
@@ -117,14 +118,14 @@ public class Recipe {
    * @return String of information about the Recipe
    */
   public String toString() {
-    StringBuilder ingredients = new StringBuilder();
-    for (IngredientForRecipe ingredientForRecipe : ingredientsForRecipe) {
-      ingredients.append(ingredientForRecipe.toString());
-    }
+    String ingredientsForRecipeString = ingredientsForRecipe.stream()
+        .map(IngredientForRecipe::toString)
+        .collect(Collectors.joining("\n"));
+
     return "Name of recipe: " + getNameOfRecipe()
         + "\nDescription: " + getRecipeDescription()
         + "\nInstructions: " + getRecipeInstructions()
-        + "\nIngredients: \n" + ingredients
-        + "Servings: " + getServings() + "\n";
+        + "\nIngredients: \n" + ingredientsForRecipeString
+        + "\nServings: " + getServings() + "\n";
   }
 }

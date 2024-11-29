@@ -3,6 +3,7 @@ package edu.ntnu.idi.idatt.utils;
 import edu.ntnu.idi.idatt.models.FoodStorage;
 import edu.ntnu.idi.idatt.models.Ingredient;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * Class representing a meal manager.
@@ -90,12 +91,8 @@ public class MealManager {
    * @return List of suggested recipes, ArrayList
    */
   public ArrayList<Recipe> suggestRecipes() {
-    ArrayList<Recipe> suggestedRecipes = new ArrayList<>();
-    for (Recipe recipe : cookbook.getRecipes()) {
-      if (hasRequiredAmountOfIngredients(recipe.getNameOfRecipe())) {
-        suggestedRecipes.add(recipe);
-      }
-    }
-    return suggestedRecipes;
+    return cookbook.getRecipes().stream()
+        .filter(recipe -> hasRequiredAmountOfIngredients(recipe.getNameOfRecipe()))
+        .collect(Collectors.toCollection(ArrayList::new));
   }
 }
