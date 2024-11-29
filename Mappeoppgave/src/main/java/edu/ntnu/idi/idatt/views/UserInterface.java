@@ -200,7 +200,7 @@ public class UserInterface {
     String unitOfNewIngredient = scanner.nextLine();
     System.out.println("What's the best-before-date, in the following format: yyyy-mm-dd");
     String bestBeforeOfNewIngredient = scanner.nextLine();
-    LocalDate date = null;
+    LocalDate date;
     try {
       String[] dateParts = bestBeforeOfNewIngredient.split("-");
       date = LocalDate.of(Integer.parseInt(dateParts[0]), Integer.parseInt(dateParts[1]),
@@ -231,8 +231,8 @@ public class UserInterface {
    * Method for removing an amount of an existing ingredient.
     */
   public void removeAmountFromFoodStorage() {
-    Ingredient foundIngredient = null;
-    String nameOfremovedIngredient = null;
+    Ingredient foundIngredient;
+    String nameOfremovedIngredient;
     do {
       System.out.println("What's the name of the ingredient you want to remove an amount from?");
       nameOfremovedIngredient = scanner.nextLine();
@@ -322,7 +322,7 @@ public class UserInterface {
    */
   public void addRecipeToCookBook() {
     String nameOfRecipe;
-    Recipe foundRecipe = null;
+    Recipe foundRecipe;
     do {
       System.out.println("What's the name of the recipe you want to add?");
       nameOfRecipe = scanner.nextLine();
@@ -353,7 +353,7 @@ public class UserInterface {
    */
   public void addIngredientToRecipe() {
     String nameOfRecipe;
-    Recipe foundRecipe = null;
+    Recipe foundRecipe;
     do {
       System.out.println("What's the name of the recipe you want to add an ingredient to?");
       nameOfRecipe = scanner.nextLine();
@@ -385,7 +385,7 @@ public class UserInterface {
    */
   public void hasRequiredAmountOfIngredients() {
     String nameOfRecipe;
-    Recipe foundRecipe = null;
+    Recipe foundRecipe;
     do {
       System.out.println("What's the name of the recipe you want to check if you can make?");
       nameOfRecipe = scanner.nextLine();
@@ -408,7 +408,7 @@ public class UserInterface {
    */
   public void useIngredientsToMakeRecipe() {
     String nameOfRecipe;
-    Recipe foundRecipe = null;
+    Recipe foundRecipe;
     do {
       System.out.println("Whats the name of the recipe you want to make?");
       nameOfRecipe = scanner.nextLine();

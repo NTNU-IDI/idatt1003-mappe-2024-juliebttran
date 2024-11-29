@@ -87,14 +87,14 @@ public class Ingredient {
    * set-method for amount.
    * Has set-method because the amount of the ingredient can change
    *
-   * @param amount New amount of the ingredient, double, cannot be negative (think SI-unit)
+   * @param newAmount New amount of the ingredient, double, cannot be negative (think SI-unit)
    */
-  public void setAmount(double amount) {
-    if (amount < 0) {
+  public void setAmount(double newAmount) {
+    if (newAmount < 0) {
       throw new IllegalArgumentException(
           "Amount must be positive, please try again!");
     }
-    this.amount = amount;
+    this.amount = newAmount;
   }
 
   /**
