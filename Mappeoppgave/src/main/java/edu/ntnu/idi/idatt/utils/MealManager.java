@@ -7,6 +7,10 @@ import java.util.ArrayList;
 /**
  * Class representing a meal manager.
  * Handles all interaction between Cookbook- and FoodStorage-class
+ *
+ * @author Julie Bao Thi Tran
+ * @version 29.11
+ * @since 27.11
  */
 public class MealManager {
   private final FoodStorage foodStorage;
