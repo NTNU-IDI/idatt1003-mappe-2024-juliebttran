@@ -74,4 +74,17 @@ public class Cookbook {
       return true;
     }
   }
+
+  /**
+   * toString-method for Cookbook-class.
+   *
+   * @return String of information about all the recipes in the cookbook
+   */
+  public String toString() {
+    StringBuilder printCookbook = new StringBuilder();
+    for (Recipe recipe : recipes) {
+      printCookbook.append(recipe.toString()).append("\n");
+    }
+    return printCookbook.toString();
+  }
 }

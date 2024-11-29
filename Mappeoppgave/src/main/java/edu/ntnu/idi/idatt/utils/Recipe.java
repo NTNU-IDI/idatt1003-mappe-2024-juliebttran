@@ -125,6 +125,6 @@ public class Recipe {
         + "\nDescription: " + getRecipeDescription()
         + "\nInstructions: " + getRecipeInstructions()
         + "\nIngredients: \n" + ingredients
-        + "Servings: " + getServings();
+        + "Servings: " + getServings() + "\n";
   }
 }
