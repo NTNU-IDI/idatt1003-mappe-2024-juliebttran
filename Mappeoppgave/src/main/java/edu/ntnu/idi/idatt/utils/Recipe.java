@@ -38,7 +38,7 @@ public class Recipe {
                 ArrayList<IngredientForRecipe> ingredientsForRecipe, int servings)
       throws IllegalArgumentException {
     if (nameOfRecipe.isBlank()) {
-      throw new IllegalArgumentException("Recipe name cannot be blank or empty, please try again!");
+      throw new IllegalArgumentException("Recipe name cannot be blank, please try again!");
     }
     if (recipeDescription.isBlank()) {
       throw new IllegalArgumentException("Recipe description cannot be blank, please try again!");

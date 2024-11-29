@@ -51,9 +51,6 @@ public class Ingredient {
     if (bestBefore == null) {
       throw new IllegalArgumentException("Best-before-date cannot be null, please try again!");
     }
-    if (bestBefore.isBefore(LocalDate.now())) {
-      throw new IllegalArgumentException("Best-before-date must be after today, please try again!");
-    }
     if (price < 0) {
       throw new IllegalArgumentException("Price must be positive, please try again!");
     }

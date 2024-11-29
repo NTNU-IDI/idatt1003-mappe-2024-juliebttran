@@ -31,7 +31,7 @@ public class IngredientForRecipe {
     if (nameOfIngredientForRecipe.isBlank()) {
       throw new IllegalArgumentException("Name cannot be blank, please try again!");
     }
-    if (amountOfIngredientForRecipe < 0) {
+    if (amountOfIngredientForRecipe <= 0) {
       throw new IllegalArgumentException(
           "Amount must be positive, please try again!");
     }
