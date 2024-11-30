@@ -9,10 +9,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class RecipeTest {
-  private Recipe recipe;
   private IngredientForRecipe heavyCream;
   private IngredientForRecipe salt;
   private IngredientForRecipe himalayaSalt;
+  private Recipe butter;
 
   @Test
   void testInvalidName() {
@@ -58,34 +58,33 @@ public class RecipeTest {
     ArrayList<IngredientForRecipe> ingredients = new ArrayList<>();
     ingredients.add(heavyCream);
     ingredients.add(salt);
-    recipe = new Recipe(
+    butter = new Recipe(
         "Butter",
         "An easy homemade butter recipe",
         "1. Whip the butter until it separates 2. Once the butter and buttermilk are separated, rinse the butter in cold water until the water runs clean 3. To finish, add salt or seasonings to taste",
         ingredients,
-        1
-        );
+        1);
   }
 
   @Test
   void testRecipe() {
-    assertEquals("Butter", recipe.getNameOfRecipe());
-    assertEquals("An easy homemade butter recipe", recipe.getRecipeDescription());
-    assertEquals("1. Whip the butter until it separates 2. Once the butter and buttermilk are separated, rinse the butter in cold water until the water runs clean 3. To finish, add salt or seasonings to taste", recipe.getRecipeInstructions());
-    assertEquals(1, recipe.getServings());
+    assertEquals("Butter", butter.getNameOfRecipe());
+    assertEquals("An easy homemade butter recipe", butter.getRecipeDescription());
+    assertEquals("1. Whip the butter until it separates 2. Once the butter and buttermilk are separated, rinse the butter in cold water until the water runs clean 3. To finish, add salt or seasonings to taste", butter.getRecipeInstructions());
+    assertEquals(1, butter.getServings());
   }
 
   @Test
   void testGetIngredientsForRecipe() {
-    assertEquals(2, recipe.getIngredientsForRecipe().size());
-    assertTrue(recipe.getIngredientsForRecipe().contains(heavyCream));
-    assertTrue(recipe.getIngredientsForRecipe().contains(salt));
+    assertEquals(2, butter.getIngredientsForRecipe().size());
+    assertTrue(butter.getIngredientsForRecipe().contains(heavyCream));
+    assertTrue(butter.getIngredientsForRecipe().contains(salt));
   }
 
   @Test
   void testAddIngredient() {
-    recipe.addIngredient(himalayaSalt);
-    assertEquals(3, recipe.getIngredientsForRecipe().size());
-    assertTrue(recipe.getIngredientsForRecipe().contains(himalayaSalt));
+    butter.addIngredient(himalayaSalt);
+    assertEquals(3, butter.getIngredientsForRecipe().size());
+    assertTrue(butter.getIngredientsForRecipe().contains(himalayaSalt));
   }
 }

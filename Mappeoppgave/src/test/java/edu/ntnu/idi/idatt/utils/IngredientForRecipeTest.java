@@ -11,8 +11,7 @@ public class IngredientForRecipeTest {
     IngredientForRecipe ingredient = new IngredientForRecipe(
         "Sugar",
         1.5,
-        "Kg"
-    );
+        "Kg");
     assertEquals("Sugar", ingredient.getNameOfIngredientForRecipe());
     assertEquals(1.5, ingredient.getAmountOfIngredientForRecipe());
     assertEquals("Kg", ingredient.getUnitOfIngredientForRecipe());
