@@ -46,18 +46,20 @@ public class UserInterface {
 
   /**
    * Start-method.
-   * Handles all user interaction
+   * Starts the application, presents the menu, retrieves the selected menu choice from the user
+   * and executes the selected functionality
    */
   public void start() {
     boolean runProgram = true;
     while (runProgram) {
-      System.out.println("What do you want to do next? Type:");
+      System.out.println("Enter:");
       System.out.println("1: If you want a list of all the ingredients in the food storage.");
       System.out.println("2: If you want to add a new ingredient to the food storage.");
-      System.out.println("3: If you want to remove an amount from the food storage.");
+      System.out.println(
+          "3: If you want to remove an amount of an ingredient in the food storage.");
       System.out.println("4: If you want a list of all the expired ingredients in the food"
           + " storage.");
-      System.out.println("5: If you want a list for all the ingredients in the food storage,"
+      System.out.println("5: If you want a list of all the ingredients in the food storage,"
           + " in alphabetical order.");
       System.out.println("6: If you want a list of all the recipes in the cookbook.");
       System.out.println("7: If you want to add a new recipe to the cookbook.");
@@ -67,11 +69,16 @@ public class UserInterface {
       System.out.println("11: If you want a list of suggestions of recipes you can make with the"
           + " available ingredients in the food storage.");
       System.out.println("12: If you want to quit the program.");
-      int choice = scanner.nextInt();
+      int menuChoice = 0;
+      if (scanner.hasNextInt()) {
+        menuChoice = scanner.nextInt();
+      } else {
+        System.out.println("You must enter a number, not text, please try again!");
+      }
       scanner.nextLine();
-      switch (choice) {
+      switch (menuChoice) {
         case 1:
-          printFoodStorage();
+          printIngredientsInFoodStorage();
           break;
         case 2:
           addNewIngredientToFoodStorage();
@@ -86,7 +93,7 @@ public class UserInterface {
           printListOfIngredientsAlphabetical();
           break;
         case 6:
-          printAllRecipes();
+          printAllRecipesInCookbook();
           break;
         case 7:
           addRecipeToCookBook();
@@ -183,7 +190,7 @@ public class UserInterface {
    * Prints each ingredient in the following format: name, amount with unit, best-before-date and
    * price per unit
    */
-  public void printFoodStorage() {
+  public void printIngredientsInFoodStorage() {
     System.out.println(foodStorage.toString());
   }
 
@@ -191,36 +198,79 @@ public class UserInterface {
    * Method for adding a new ingredient to the food storage.
    */
   public void addNewIngredientToFoodStorage() {
-    System.out.println("What's the name of the ingredient you want to add?");
-    String nameOfnewIngredient = scanner.nextLine();
-    System.out.println("What's how much would you like to add? In kilogram or litre.");
-    double amountOfNewIngredient = scanner.nextDouble();
-    scanner.nextLine();
-    System.out.println("Which unit do you want to use for this ingredient? 'Kg' or 'L'.");
-    String unitOfNewIngredient = scanner.nextLine();
-    System.out.println("What's the best-before-date, in the following format: yyyy-mm-dd");
-    String bestBeforeOfNewIngredient = scanner.nextLine();
-    LocalDate date;
-    try {
-      String[] dateParts = bestBeforeOfNewIngredient.split("-");
-      date = LocalDate.of(Integer.parseInt(dateParts[0]), Integer.parseInt(dateParts[1]),
-          Integer.parseInt(dateParts[2]));
-    } catch (Exception e) {
-      System.out.println(
-          "The date-format you provided is wrong, please try again in the following format:"
-              + " yyyy-mm-dd");
-      return;
-    }
-    System.out.println("What's the price per unit in NOK?");
-    double priceOfNewIngredient = scanner.nextDouble();
+    String nameOfnewIngredient;
+    do {
+      System.out.println("What's the name of the ingredient you want to add?");
+      nameOfnewIngredient = scanner.nextLine();
+      if (nameOfnewIngredient.isBlank()) {
+        System.out.println("Name cannot be blank, please try again");
+      }
+    } while (nameOfnewIngredient.isBlank());
+
+    double amountOfNewIngredient = 0;
+    do {
+      System.out.println("How much would you like to add? In kilogram or litre.");
+      if (scanner.hasNextDouble()) {
+        amountOfNewIngredient = scanner.nextDouble();
+        scanner.nextLine();
+        if (amountOfNewIngredient <= 0) {
+          System.out.println("Amount must be a positive number greater than 0, please try again!");
+        }
+      } else {
+        System.out.println("Amount must be a number, not text, please try again!");
+        scanner.next();
+      }
+    } while (amountOfNewIngredient <= 0);
+
+    String unitOfNewIngredient;
+    do {
+      System.out.println("Which unit do you want to use for this ingredient? 'Kg' or 'L'.");
+      unitOfNewIngredient = scanner.nextLine();
+      if (!unitOfNewIngredient.equalsIgnoreCase("Kg")
+          && !unitOfNewIngredient.equalsIgnoreCase("L")) {
+        System.out.println("Unit must be either 'Kg' or 'L',please try again.");
+      }
+    } while (!unitOfNewIngredient.equalsIgnoreCase("Kg")
+        && !unitOfNewIngredient.equalsIgnoreCase("L"));
+
+    LocalDate date = null;
+    do {
+      System.out.println("What's the best-before-date, in the following format: yyyy-mm-dd");
+      String bestBeforeOfNewIngredient = scanner.nextLine();
+      try {
+        String[] dateParts = bestBeforeOfNewIngredient.split("-");
+        date = LocalDate.of(Integer.parseInt(dateParts[0]), Integer.parseInt(dateParts[1]),
+            Integer.parseInt(dateParts[2]));
+      } catch (Exception e) {
+        System.out.println(
+            "The date-format you provided is wrong, please try again in the following format:"
+                + " yyyy-mm-dd");
+      }
+    } while (date == null);
+
+    double priceOfNewIngredient = 0;
+    do {
+      System.out.println("What's the price per unit in NOK?");
+
+      if (scanner.hasNextDouble()) {
+        priceOfNewIngredient = scanner.nextDouble();
+        if (priceOfNewIngredient <= 0) {
+          System.out.println("Price must be a positive number greater than 0, please try again!");
+        }
+      } else {
+        System.out.println("Price must be a number, not text, please try again!");
+        scanner.next();
+      }
+    } while (priceOfNewIngredient <= 0);
+
     try {
       Ingredient newIngredient =
           new Ingredient(nameOfnewIngredient, amountOfNewIngredient, unitOfNewIngredient, date,
               priceOfNewIngredient);
       if (foodStorage.addNewIngredient(newIngredient)) {
-        System.out.println("Amount was successfully added to the food storage.");
+        System.out.println("Amount of " + nameOfnewIngredient + " was successfully updated.");
       } else {
-        System.out.println("Ingredient was successfully added to the food storage.");
+        System.out.println(nameOfnewIngredient + " was successfully added to the food storage.");
       }
     } catch (IllegalArgumentException exception) {
       System.out.println(exception.getMessage());
@@ -232,32 +282,44 @@ public class UserInterface {
    */
   public void removeAmountFromFoodStorage() {
     Ingredient foundIngredient;
-    String nameOfremovedIngredient;
+    String nameOfIngredientToRemove;
     do {
       System.out.println("What's the name of the ingredient you want to remove an amount from?");
-      nameOfremovedIngredient = scanner.nextLine();
-      foundIngredient = foodStorage.findIngredient(nameOfremovedIngredient);
-      if (foundIngredient == null) {
-        System.out.println(nameOfremovedIngredient + " does not exist in the food storage.");
+      nameOfIngredientToRemove = scanner.nextLine();
+      foundIngredient = foodStorage.findIngredient(nameOfIngredientToRemove);
+      if (nameOfIngredientToRemove.isBlank()) {
+        System.out.println("Name cannot be blank, please try again");
+      } else if (foundIngredient == null) {
+        System.out.println(
+            nameOfIngredientToRemove + " does not exist in the food storage, please try again");
       }
-    } while (foundIngredient == null);
-    double amountOfRemovedIngredient;
+    } while (nameOfIngredientToRemove.isBlank() || foundIngredient == null);
+
+    double amountOfIngredientToRemove = 0;
     do {
       System.out.println("What's the amount you want to remove?");
-      amountOfRemovedIngredient = scanner.nextDouble();
-      if (amountOfRemovedIngredient <= 0) {
-        System.out.println(
-            "The amount you want to remove, must be a positive number, please try again!");
-      } else if (amountOfRemovedIngredient > foundIngredient.getAmount()) {
-        System.out.println("You do not have enough " + nameOfremovedIngredient
-            + " in the food storage to remove " + amountOfRemovedIngredient
-            + " " + foundIngredient.getUnit() + ". Please try again!");
+      if (scanner.hasNextDouble()) {
+        amountOfIngredientToRemove = scanner.nextDouble();
+        if (amountOfIngredientToRemove <= 0) {
+          System.out.println(
+              "The amount you want to remove must be a positive number greater than 0, please"
+                  + " try again!");
+        } else if (amountOfIngredientToRemove > foundIngredient.getAmount()) {
+          System.out.println("You do not have enough " + nameOfIngredientToRemove
+              + " in the food storage to remove " + amountOfIngredientToRemove
+              + " " + foundIngredient.getUnit() + ". Please try again!");
+        }
+      } else {
+        System.out.println("Amount must be a number, not text, please try again!");
+        scanner.next();
       }
-    } while (amountOfRemovedIngredient <= 0
-        || amountOfRemovedIngredient > foundIngredient.getAmount());
-    if (foodStorage.removeAmountOfIngredient(nameOfremovedIngredient, amountOfRemovedIngredient)) {
-      System.out.println(amountOfRemovedIngredient + " " + foundIngredient.getUnit()
-          + " of " + nameOfremovedIngredient + " was successfully removed from the food storage.");
+    } while (amountOfIngredientToRemove <= 0
+        || amountOfIngredientToRemove > foundIngredient.getAmount());
+
+    if (foodStorage.removeAmountOfIngredient(nameOfIngredientToRemove,
+        amountOfIngredientToRemove)) {
+      System.out.println(amountOfIngredientToRemove + " " + foundIngredient.getUnit()
+          + " of " + nameOfIngredientToRemove + " was successfully removed from the food storage.");
     }
   }
 
@@ -291,7 +353,7 @@ public class UserInterface {
    * Prints each recipe in the following format: name, description, instructions, ingredients,
    * servings
    */
-  public void printAllRecipes() {
+  public void printAllRecipesInCookbook() {
     System.out.println(cookBook.toString());
   }
 
@@ -309,18 +371,48 @@ public class UserInterface {
         System.out.println(nameOfRecipe + " already exists in the cookbook, please try again!");
       }
     } while (foundRecipe != null);
-    System.out.println("Please write a short description of the recipe.");
-    String descriptionOfRecipe = scanner.nextLine();
-    System.out.println("Please instructions for the recipe.");
-    String instructionsOfRecipe = scanner.nextLine();
-    System.out.println("How many servings is this recipe meant for?");
-    int servingsForRecipe = scanner.nextInt();
-    ArrayList<IngredientForRecipe> ingredientsForRecipe = new ArrayList<>();
+
+    String descriptionOfRecipe;
+    do {
+      System.out.println("Please write a short description of the recipe.");
+      descriptionOfRecipe = scanner.nextLine();
+      if (descriptionOfRecipe.isBlank()) {
+        System.out.println("Description of recipe cannot be blank, please try again");
+      }
+    } while (descriptionOfRecipe.isBlank());
+
+    String instructionsOfRecipe;
+    do {
+      System.out.println("Please instructions for the recipe.");
+      instructionsOfRecipe = scanner.nextLine();
+      if (instructionsOfRecipe.isBlank()) {
+        System.out.println("Instructions of recipe cannot be blank, please try again");
+      }
+    } while (instructionsOfRecipe.isBlank());
+
+    int servingsForRecipe = 0;
+    do {
+      System.out.println("How many servings is this recipe meant for?");
+      if (scanner.hasNextInt()) {
+        servingsForRecipe = scanner.nextInt();
+        scanner.nextLine();
+        if (servingsForRecipe <= 0) {
+          System.out.println("Servings must be a positive number greater than 0, please try again");
+        }
+      } else {
+        System.out.println("Servings must be a number, not text, please try again");
+        scanner.next();
+      }
+    } while (servingsForRecipe <= 0);
+
+    ArrayList<IngredientForRecipe> ingredientsForNewRecipe = new ArrayList<>();
     try {
       Recipe newRecipe =
-          new Recipe(nameOfRecipe, descriptionOfRecipe, instructionsOfRecipe, ingredientsForRecipe,
+          new Recipe(nameOfRecipe, descriptionOfRecipe, instructionsOfRecipe,
+              ingredientsForNewRecipe,
               servingsForRecipe);
       cookBook.addNewRecipe(newRecipe);
+      System.out.println(nameOfRecipe + " was successfully added to the cookbook!");
     } catch (Exception exception) {
       System.out.println(exception.getMessage());
     }
@@ -340,14 +432,45 @@ public class UserInterface {
         System.out.println(nameOfRecipe + " does not exist in the cookbook, please try again.");
       }
     } while (foundRecipe == null);
-    System.out.println("What's the name of the ingredient you want to add?");
-    String nameOfIngredient = scanner.nextLine();
-    System.out.println("How much " + nameOfIngredient + " do you need for this recipe? In"
-        + " kilogram or litre.");
-    double amountOfIngredient = scanner.nextDouble();
-    scanner.nextLine();
-    System.out.println("Which unit do you want to use for this ingredient? 'Kg' or 'L'.");
-    String unitOfIngredient = scanner.nextLine();
+
+    IngredientForRecipe foundIngredient;
+    String nameOfIngredient;
+    do {
+      System.out.println("What's the name of the ingredient you want to add?");
+      nameOfIngredient = scanner.nextLine();
+      foundIngredient = foundRecipe.findIngredientForRecipe(nameOfIngredient);
+      if (nameOfIngredient.isBlank()) {
+        System.out.println("Name cannot be blank, please try again");
+      } else if (foundIngredient != null) {
+        System.out.println(nameOfIngredient + " already exists in this recipe, please try again!");
+      }
+    } while (nameOfIngredient.isBlank() || foundIngredient != null);
+
+    double amountOfIngredient = 0;
+    do {
+      System.out.println("How much " + nameOfIngredient + " do you need for this recipe? In"
+          + " kilogram or litre.");
+      if (scanner.hasNextDouble()) {
+        amountOfIngredient = scanner.nextDouble();
+        scanner.nextLine();
+        if (amountOfIngredient <= 0) {
+          System.out.println(
+              "The amount must be a positive number greater than 0, please try again!");
+        }
+      } else {
+        System.out.println("Amount must be a number, not text, please try again");
+        scanner.next();
+      }
+    } while (amountOfIngredient <= 0);
+
+    String unitOfIngredient;
+    do {
+      System.out.println("Which unit do you want to use for this ingredient? 'Kg' or 'L'.");
+      unitOfIngredient = scanner.nextLine();
+      if (!unitOfIngredient.equalsIgnoreCase("Kg") && !unitOfIngredient.equalsIgnoreCase("L")) {
+        System.out.println("Unit must be either 'Kg' or 'L',please try again.");
+      }
+    } while (!unitOfIngredient.equalsIgnoreCase("Kg") && !unitOfIngredient.equalsIgnoreCase("L"));
     try {
       IngredientForRecipe newIngredient =
           new IngredientForRecipe(nameOfIngredient, amountOfIngredient, unitOfIngredient);

@@ -103,6 +103,13 @@ public class Recipe {
     ingredientsForRecipe.add(newIngredient);
   }
 
+  public IngredientForRecipe findIngredientForRecipe(String nameOfIngredient) {
+    return ingredientsForRecipe.stream()
+        .filter(ingredient -> ingredient.getNameOfIngredientForRecipe().equalsIgnoreCase(nameOfIngredient))
+        .findFirst()
+        .orElse(null);
+  }
+
   /**
    * get-method for serving.
    *
