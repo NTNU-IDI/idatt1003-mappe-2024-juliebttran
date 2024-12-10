@@ -6,7 +6,7 @@ import edu.ntnu.idi.idatt.views.UserInterface;
  * Class representing the application/clientprogram.
  *
  * @author Julie Bao Thi Tran
- * @version 23.11
+ * @version 29.11
  * @since 23.11
  */
 public class Application {

@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
  * Class representing a cookbook.
  *
  * @author Julie Bao Thi Tran
- * @version 27.11
+ * @version 29.11
  * @since 25.11
  */
 public class Cookbook {

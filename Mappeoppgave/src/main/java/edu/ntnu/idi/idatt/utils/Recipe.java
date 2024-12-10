@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
  * Class representing a recipe.
  *
  * @author Julie Bao Thi Tran
- * @version 27.11
+ * @version 10.12
  * @since 25.11
  */
 public class Recipe {
