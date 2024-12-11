@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
  * Class representing a recipe.
  *
  * @author Julie Bao Thi Tran
- * @version 10.12
+ * @version 11.12
  * @since 25.11
  */
 public class Recipe {
@@ -103,9 +103,18 @@ public class Recipe {
     ingredientsForRecipe.add(newIngredient);
   }
 
+  /**
+   * Method for finding an ingredient in list of ingredients for a recipe.
+   * Searches through the list of ingredients for a recipe based by the name of the ingredient
+   *
+   * @param nameOfIngredient The name of the ingredient you want to find, String
+   * @return ingredient of type IngredientForRecipe, if it exists in the ingredient list, 'null' if
+   *     it does not exist
+   */
   public IngredientForRecipe findIngredientForRecipe(String nameOfIngredient) {
     return ingredientsForRecipe.stream()
-        .filter(ingredient -> ingredient.getNameOfIngredientForRecipe().equalsIgnoreCase(nameOfIngredient))
+        .filter(ingredient -> ingredient.getNameOfIngredientForRecipe()
+            .equalsIgnoreCase(nameOfIngredient))
         .findFirst()
         .orElse(null);
   }

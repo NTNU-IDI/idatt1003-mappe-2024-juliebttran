@@ -1,6 +1,7 @@
 package edu.ntnu.idi.idatt.utils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -86,5 +87,11 @@ public class RecipeTest {
     butter.addIngredient(himalayaSalt);
     assertEquals(3, butter.getIngredientsForRecipe().size());
     assertTrue(butter.getIngredientsForRecipe().contains(himalayaSalt));
+  }
+
+  @Test
+  void testFindIngredient() {
+    assertEquals(salt, butter.findIngredientForRecipe("Salt"));
+    assertNull(butter.findIngredientForRecipe("Flour"));
   }
 }

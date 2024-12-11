@@ -34,7 +34,7 @@ class FoodStorageTest {
   }
 
   @Test
-  void testAddNewIngredientFalse() {
+  void testAddNewIngredient() {
     assertFalse(foodStorage.addNewIngredient(milk));
     assertEquals(3, foodStorage.getIngredients().size());
     assertTrue(foodStorage.getIngredients().contains(milk));
@@ -45,9 +45,8 @@ class FoodStorageTest {
   }
 
   @Test
-  void testFindIngredientPositive() {
+  void testFindIngredient() {
     assertEquals(sugar, foodStorage.findIngredient("Sugar"));
-
     assertNull(foodStorage.findIngredient("Flour"));
   }
 
