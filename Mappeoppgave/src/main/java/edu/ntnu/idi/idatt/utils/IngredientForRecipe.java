@@ -4,7 +4,7 @@ package edu.ntnu.idi.idatt.utils;
  * Class representing an ingredient for a recipe.
  *
  * @author Julie Bao Thi Tran
- * @version 30.11
+ * @version 10.12
  * @since 27.11
  */
 public class IngredientForRecipe {

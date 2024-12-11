@@ -6,7 +6,7 @@ import java.time.LocalDate;
  * Class representing an ingredient.
  *
  * @author Julie Bao Thi Tran
- * @version 30.11
+ * @version 10.12
  * @since 17.11
  */
 public class Ingredient {

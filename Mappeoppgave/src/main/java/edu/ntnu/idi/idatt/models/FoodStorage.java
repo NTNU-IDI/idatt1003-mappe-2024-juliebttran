@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
  * Class representing a food storage.
  *
  * @author Julie Bao Thi Tran
- * @version 30.11
+ * @version 11.12
  * @since 24.11
  */
 public class FoodStorage {
