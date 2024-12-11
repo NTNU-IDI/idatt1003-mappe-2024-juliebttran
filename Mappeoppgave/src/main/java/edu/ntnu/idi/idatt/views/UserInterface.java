@@ -15,7 +15,7 @@ import java.util.Scanner;
  * of new instances.
  *
  * @author Julie Bao Thi Tran
- * @version 10.12
+ * @version 11.12
  * @since 23.11
  */
 public class UserInterface {
@@ -299,12 +299,14 @@ public class UserInterface {
       foundIngredient = foodStorage.findIngredient(nameOfIngredientToFind);
       if (nameOfIngredientToFind.isBlank()) {
         System.out.println("Name cannot be blank, please try again");
-      } else if (foundIngredient == null) {
-        System.out.println(
-            nameOfIngredientToFind + " does not exist in the food storage, please try again!");
       }
-    } while (nameOfIngredientToFind.isBlank() || foundIngredient == null);
-    System.out.println(nameOfIngredientToFind + " exists in the food storage.");
+    } while (nameOfIngredientToFind.isBlank());
+    if (foundIngredient == null) {
+      System.out.println(
+          nameOfIngredientToFind + " does not exist in the food storage, please try again!");
+    } else {
+      System.out.println(nameOfIngredientToFind + " exists in the food storage.");
+    }
   }
 
   /**
@@ -319,11 +321,13 @@ public class UserInterface {
       foundIngredient = foodStorage.findIngredient(nameOfIngredientToRemove);
       if (nameOfIngredientToRemove.isBlank()) {
         System.out.println("Name cannot be blank, please try again");
-      } else if (foundIngredient == null) {
-        System.out.println(
-            nameOfIngredientToRemove + " does not exist in the food storage, please try again!");
       }
-    } while (nameOfIngredientToRemove.isBlank() || foundIngredient == null);
+    } while (nameOfIngredientToRemove.isBlank());
+    if (foundIngredient == null) {
+      System.out.println(
+          nameOfIngredientToRemove + " does not exist in the food storage, please try again!");
+      return;
+    }
 
     double amountOfIngredientToRemove = 0;
     do {
