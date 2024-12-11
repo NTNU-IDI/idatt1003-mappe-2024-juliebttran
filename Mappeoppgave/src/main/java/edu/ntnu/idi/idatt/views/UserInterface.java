@@ -55,20 +55,23 @@ public class UserInterface {
       System.out.println("Enter:");
       System.out.println("1: If you want a list of all the ingredients in the food storage.");
       System.out.println("2: If you want to add a new ingredient to the food storage.");
-      System.out.println(
-          "3: If you want to remove an amount of an ingredient in the food storage.");
-      System.out.println("4: If you want a list of all the expired ingredients in the food"
+      System.out.println("3: If you want to check if you have an ingredient in the food storage.");
+      System.out.println("4: If you want to remove an amount of an ingredient in the food"
           + " storage.");
-      System.out.println("5: If you want a list of all the ingredients in the food storage,"
+      System.out.println("5: If you want a list of all the expired ingredients in the food"
+          + " storage.");
+      System.out.println("6: If you want a list of all the ingredients with best-before-date"
+          + " before a specific date.");
+      System.out.println("7: If you want a list of all the ingredients in the food storage,"
           + " in alphabetical order.");
-      System.out.println("6: If you want a list of all the recipes in the cookbook.");
-      System.out.println("7: If you want to add a new recipe to the cookbook.");
-      System.out.println("8: If you want to add an ingredient to an existing recipe.");
-      System.out.println("9: If you want to check if you can make a specific recipe.");
-      System.out.println("10: If you want to use ingredients for making a recipe.");
-      System.out.println("11: If you want a list of suggestions of recipes you can make with the"
+      System.out.println("8: If you want a list of all the recipes in the cookbook.");
+      System.out.println("9: If you want to add a new recipe to the cookbook.");
+      System.out.println("10: If you want to add an ingredient to an existing recipe.");
+      System.out.println("11: If you want to check if you can make a specific recipe.");
+      System.out.println("12: If you want to use ingredients for making a recipe.");
+      System.out.println("13: If you want a list of suggestions of recipes you can make with the"
           + " available ingredients in the food storage.");
-      System.out.println("12: If you want to quit the program.");
+      System.out.println("14: If you want to quit the program.");
       int menuChoice = 0;
       if (scanner.hasNextInt()) {
         menuChoice = scanner.nextInt();
@@ -84,33 +87,39 @@ public class UserInterface {
           addNewIngredientToFoodStorage();
           break;
         case 3:
-          removeAmountFromFoodStorage();
+          searchForIngredientInFoodStorage();
           break;
         case 4:
-          printListOfExpiredIngredients();
+          removeAmountFromFoodStorage();
           break;
         case 5:
-          printListOfIngredientsAlphabetical();
+          printListOfExpiredIngredients();
           break;
         case 6:
-          printAllRecipesInCookbook();
+          printListOfIngredientsBeforeDate();
           break;
         case 7:
-          addRecipeToCookBook();
+          printListOfIngredientsAlphabetical();
           break;
         case 8:
-          addIngredientToRecipe();
+          printAllRecipesInCookbook();
           break;
         case 9:
-          hasRequiredAmountOfIngredients();
+          addRecipeToCookBook();
           break;
         case 10:
-          useIngredientsToMakeRecipe();
+          addIngredientToRecipe();
           break;
         case 11:
-          listOfSuggestedRecipes();
+          hasRequiredAmountOfIngredients();
           break;
         case 12:
+          useIngredientsToMakeRecipe();
+          break;
+        case 13:
+          listOfSuggestedRecipes();
+          break;
+        case 14:
           System.out.println("You want to quit the program.");
           runProgram = false;
           break;
@@ -278,6 +287,27 @@ public class UserInterface {
   }
 
   /**
+   * Method for searching after an ingredient in the food storage, based on the name of the
+   * ingredient.
+   */
+  public void searchForIngredientInFoodStorage() {
+    Ingredient foundIngredient;
+    String nameOfIngredientToFind;
+    do {
+      System.out.println("What's the name of the ingredient you want to search for?");
+      nameOfIngredientToFind = scanner.nextLine();
+      foundIngredient = foodStorage.findIngredient(nameOfIngredientToFind);
+      if (nameOfIngredientToFind.isBlank()) {
+        System.out.println("Name cannot be blank, please try again");
+      } else if (foundIngredient == null) {
+        System.out.println(
+            nameOfIngredientToFind + " does not exist in the food storage, please try again!");
+      }
+    } while (nameOfIngredientToFind.isBlank() || foundIngredient == null);
+    System.out.println(nameOfIngredientToFind + " exists in the food storage.");
+  }
+
+  /**
    * Method for removing an amount of an existing ingredient.
    */
   public void removeAmountFromFoodStorage() {
@@ -291,7 +321,7 @@ public class UserInterface {
         System.out.println("Name cannot be blank, please try again");
       } else if (foundIngredient == null) {
         System.out.println(
-            nameOfIngredientToRemove + " does not exist in the food storage, please try again");
+            nameOfIngredientToRemove + " does not exist in the food storage, please try again!");
       }
     } while (nameOfIngredientToRemove.isBlank() || foundIngredient == null);
 
@@ -315,12 +345,8 @@ public class UserInterface {
       }
     } while (amountOfIngredientToRemove <= 0
         || amountOfIngredientToRemove > foundIngredient.getAmount());
-
-    if (foodStorage.removeAmountOfIngredient(nameOfIngredientToRemove,
-        amountOfIngredientToRemove)) {
-      System.out.println(amountOfIngredientToRemove + " " + foundIngredient.getUnit()
-          + " of " + nameOfIngredientToRemove + " was successfully removed from the food storage.");
-    }
+    System.out.println(amountOfIngredientToRemove + " " + foundIngredient.getUnit()
+        + " of " + nameOfIngredientToRemove + " was successfully removed from the food storage.");
   }
 
   /**
@@ -335,6 +361,43 @@ public class UserInterface {
           .forEach(System.out::println);
       System.out.println(
           "Total sum of expired ingredients: " + foodStorage.sumOfExpiredIngredients());
+    } else {
+      System.out.println("The food storage contains no expired ingredients.");
+    }
+  }
+
+  /**
+   * Method for printing all the ingredients in the food storage with best-before-date before a
+   * specific date.
+   * Prints each ingredient in the following format: name, amount with unit, best-before-date
+   * and price per unit
+   */
+  public void printListOfIngredientsBeforeDate() {
+    System.out.println(
+        "Which date to you want to use as reference, in the following format: yyyy-mm-dd");
+    LocalDate checkDate = null;
+    boolean validDate = false;
+    do {
+      String dateForReference = scanner.nextLine();
+      try {
+        String[] dateParts = dateForReference.split("-");
+        checkDate = LocalDate.of(Integer.parseInt(dateParts[0]), Integer.parseInt(dateParts[1]),
+            Integer.parseInt(dateParts[2]));
+        validDate = true;
+      } catch (Exception e) {
+        System.out.println(
+            "The date-format you provided is wrong, please try again in the following format:"
+                + " yyyy-mm-dd");
+      }
+    } while (!validDate);
+    ArrayList<Ingredient> findAllIngredientsBeforeDate =
+        foodStorage.findAllIngredientsBeforeDate(checkDate);
+    if (!findAllIngredientsBeforeDate.isEmpty()) {
+      findAllIngredientsBeforeDate
+          .forEach(System.out::println);
+    } else {
+      System.out.println(
+          "There is no ingredient in the food storage with best-before-date before " + checkDate);
     }
   }
 
