@@ -113,8 +113,9 @@ public class FoodStorage {
    * @return List of all the expired ingredients in the food storage, Arraylist
    */
   public ArrayList<Ingredient> findAllExpiredIngredients() {
-    LocalDate todaysDate = LocalDate.now();
-    return findAllIngredientsBeforeDate(todaysDate);
+    return ingredients.stream()
+        .filter(ingredient -> ingredient.getBestBefore().isBefore(LocalDate.now()))
+        .collect(Collectors.toCollection(ArrayList::new));
   }
 
   /**

@@ -33,7 +33,7 @@ public class MealManager {
    * specific recipe.
    *
    * @param nameOfRecipe The name of the specific recipe you want to use as reference
-   * @return 'true' if the food storage contains the required amounts of ingredients to make a
+   * @return 'true' if the food storage contains the required amounts of all ingredients to make a
    *      specific recipe, 'false' if it does not
    */
   public boolean hasRequiredAmountOfIngredients(String nameOfRecipe) {
