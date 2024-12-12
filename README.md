@@ -8,25 +8,20 @@ STUDENT NAME = "Julie Bao Thi Tran"
 STUDENT ID = "562673"
 
 ## Project description
-
-[//]: # (TODO: Write a short description of your project/product here.)
+This project serves as the end assignment for the course IDATT1003. The project itself is to develop a solution to reduce food waste in households by making consumers a little more aware og their own food waste. The final solution focuses on which ingredients the user has in his/her "food storage", and how it's best to use these, for examle by following a recipe.
 
 ## Project structure
-
-[//]: # (TODO: Describe the structure of your project here. How have you used packages in your structure. Where are all sourcefiles stored. Where are all JUnit-test classes stored. etc.)
+Source files are stored in src/main/java/edu/ntnu/idi/idatt. There you will find three folders whereas each folder contains different classes for the program. 
 
 ## Link to repository
 
 [//]: # (TODO: Include a link to your GitHub repository here.)
 
 ## How to run the project
-
-[//]: # (TODO: Describe how to run your project here. What is the main class? What is the main method?
-What is the input and output of the program? What is the expected behaviour of the program?)
+To run the project you have to locate and open the Application-class in src/main/java/edu/ntnu/idi/idatt. You can then run the file. 
 
 ## How to run the tests
-
-[//]: # (TODO: Describe how to run the tests here.)
+To run the tests you have to locate the test-classes in src/test/java/edu/ntnu/idi/idatt there you will find two folders, open any of them and run any test.
 
 ## References
 
