@@ -23,3 +23,5 @@ To run the tests you have to locate the test-classes in src/test/java/edu/ntnu/i
 
 ## References
 https://www.geeksforgeeks.org/coupling-in-java/?ref=ml_lbp
+https://www.geeksforgeeks.org/stream-in-java/
+https://www.w3schools.com/java/java_lambda.asp
