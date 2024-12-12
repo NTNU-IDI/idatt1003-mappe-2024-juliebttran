@@ -2,8 +2,6 @@
 # Portfolio project IDATT1003
 This file uses Mark Down syntax. For more information see [here](https://www.markdownguide.org/basic-syntax/).
 
-[//]: # (TODO: Fill inn your name and student ID)
-
 STUDENT NAME = "Julie Bao Thi Tran"  
 STUDENT ID = "562673"
 
@@ -15,7 +13,7 @@ Source files are stored in src/main/java/edu/ntnu/idi/idatt. There you will find
 
 ## Link to repository
 
-[//]: # (TODO: Include a link to your GitHub repository here.)
+https://github.com/NTNU-IDI/idatt1003-mappe-2024-juliebttran
 
 ## How to run the project
 To run the project you have to locate and open the Application-class in src/main/java/edu/ntnu/idi/idatt. You can then run the file. 
@@ -24,6 +22,4 @@ To run the project you have to locate and open the Application-class in src/main
 To run the tests you have to locate the test-classes in src/test/java/edu/ntnu/idi/idatt there you will find two folders, open any of them and run any test.
 
 ## References
-
-[//]: # (TODO: Include references here, if any. For example, if you have used code from the course book, include a reference to the chapter.
-Or if you have used code from a website or other source, include a link to the source.)
+https://www.geeksforgeeks.org/coupling-in-java/?ref=ml_lbp
